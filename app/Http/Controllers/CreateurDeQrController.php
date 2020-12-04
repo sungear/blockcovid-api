@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 
 class CreateurDeQrController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
-        $createur_de_qr = CreateurDeQrController::create($request->all());
-
-        return response()->json($createur_de_qr);
+        
     }
 
     public function store(CreateurDeQr $createur_de_qr)

@@ -2,35 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CreateurDeQr;
 use App\Models\Medecin;
 use Illuminate\Http\Request;
 
 class MedecinController extends Controller
 {   
-    public function create()
+    public function create(Request $request)
     {
-        $medecin = Medecin::create($request->all());
-
-        return response()->json($medecin);
+        
     }
 
     public function store(Request $request)
     {
-        
-        $medecin = new Medecin;
-        $medecin->nom = 'nom_post';
-        $medecin->prenom = 'prenom_post';
-
-
-        $medecin->save();
+       //Todo
     }
     
     public function show($id)
     {
-        $medecin = Medecin::all();
+        $medecin = app('db')->select("SELECT * FROM pfe.medecins WHERE id_createur_de_qr = $id");
+        $medecin = response()->json($medecin[0]);
+        // $medecin = Medecin::findOrFail($id);
 
-        return Medecin::findOrFail($id);
+        return $medecin;
     }
     
     public function edit(Medecin $medecin)
