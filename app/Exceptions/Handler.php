@@ -49,6 +49,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // if ($exception instanceof \Illuminate\Database\QueryException) 
+        //     {
+        //         $status = Response::HTTP_METHOD_NOT_ALLOWED;
+        //         $exception = new MethodNotAllowedHttpException([],                 
+        //         'HTTP_METHOD_NOT_ALLOWED', $exception);
+        //     }
         return parent::render($request, $exception);
     }
 }

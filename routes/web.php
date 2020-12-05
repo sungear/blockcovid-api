@@ -15,8 +15,8 @@
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-    $router->group(['prefix' => 'citoyens'], function () use ($router) {    
-        $router->post('enregistrement', 'CitoyenController@store'); 
+    $router->group(['prefix' => 'citoyens'], function () use ($router) { 
+        $router->post('enregistrement', ['middleware' => 'uuid', 'uses' => 'CitoyenController@store']);
         $router->get('all', 'CitoyenController@showAll');
         //Il faut créer un Service Provider pour gérer les différents types de QR codes
         //avant d'ajouter dans frequentations si besoin et faire appel à ce Service ici.

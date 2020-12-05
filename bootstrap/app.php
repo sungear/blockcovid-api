@@ -84,6 +84,10 @@ $app->routeMiddleware([
     'cors' => App\Http\Middleware\CorsMiddleware::class
 ]);
 
+$app->routeMiddleware([
+    'uuid' => App\Http\Middleware\GenerateUUID::class
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\GenerateUUIDEvent;
 
 class Citoyen extends Model
 {
@@ -42,4 +43,5 @@ class Citoyen extends Model
      * @var bool
      */
     public $timestamps = false;
+
 }

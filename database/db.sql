@@ -37,7 +37,7 @@ CREATE TABLE pfe.qr_etablissements(
 
 CREATE TABLE pfe.citoyens(
 	id_citoyen VARCHAR(255) PRIMARY KEY,
-    token_fcm VARCHAR(255) CHECK(token_fcm <> '')
+    token_fcm VARCHAR(255) NOT NULL UNIQUE CHECK(token_fcm <> '')
 );
 
 CREATE TABLE pfe.frequentations(
