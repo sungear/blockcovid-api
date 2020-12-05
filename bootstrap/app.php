@@ -80,8 +80,8 @@ $app->configure('app');
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-$app->routeMiddleware([
-    'cors' => App\Http\Middleware\CorsMiddleware::class
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
 ]);
 
 $app->routeMiddleware([
@@ -116,7 +116,6 @@ $app->routeMiddleware([
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
-    'middleware' => 'cors'
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
