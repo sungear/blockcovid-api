@@ -41,7 +41,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('connexion', 'CreateurDeQrController@login');  
     
     $router->get('/', function () use ($router) {
-        return 'api de blockcovid groupe 10';
+        return 'api de BlockCovid groupe 10';
     });    
 });
 
