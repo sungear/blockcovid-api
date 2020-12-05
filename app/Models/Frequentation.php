@@ -12,7 +12,7 @@ class Frequentation extends Model
      * @var array
      */
     protected $fillable = [
-        'id_citoyen', 'id_qr_etablissement'
+        'id_citoyen', 'id_qr_etablissement', 'date_frequentation'
     ];
 
     /**

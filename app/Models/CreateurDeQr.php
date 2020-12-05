@@ -12,7 +12,7 @@ class CreateurDeQr extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'numero', 'mot_de_passe', 'type_createur'
+        'id_createur_de_qr', 'email', 'numero', 'mot_de_passe', 'type_createur'
     ];
 
     /**
@@ -28,6 +28,13 @@ class CreateurDeQr extends Model
      * @var string
      */
     protected $primaryKey = 'id_createur_de_qr';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * Indicates if the model should be timestamped.

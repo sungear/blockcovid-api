@@ -16,14 +16,14 @@
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['prefix' => 'citoyens'], function () use ($router) {    
-        $router->get('enregistrement', 'CitoyenController@store'); 
+        $router->post('enregistrement', 'CitoyenController@store'); 
         $router->get('all', 'CitoyenController@showAll');
         //Il faut créer un Service Provider pour gérer les différents types de QR codes
         //avant d'ajouter dans frequentations si besoin et faire appel à ce Service ici.
     });
 
     $router->group(['prefix' => 'medecins'], function () use ($router) {  
-        $router->post('{id}/qr_code', 'QrMedecinController@store');      
+        $router->post('qr_code', 'QrMedecinController@store');      
         $router->get('{id}', 'MedecinController@show');            
         //Pour les inscriptions, il faut créer un Service Provider pour 
         //ajouter dans createurs_de_qr (à partir du CreateurDeQrController)
@@ -31,7 +31,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'etablissements'], function () use ($router) {    
-        $router->post('{id}/qr_code', 'QrEtablissementController@store'); 
+        $router->post('qr_code', 'QrEtablissementController@store'); 
         //Pour les inscriptions, il faut créer un Service Provider pour 
         //ajouter dans createurs_de_qr (à partir du CreateurDeQrController)
         //et dans etablissemens (à partir du EtablissementController) et faire appel à ce Service ici.   

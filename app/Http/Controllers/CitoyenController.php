@@ -14,14 +14,21 @@ class CitoyenController extends Controller
 
     public function store(Request $request)
     {
+        //Générer ID aléatoire ici
+        $id = $request->id_citoyen;
         //Avec un query builder
         // $citoyen = new Citoyen;
+        // $citoyen->id = $request->id;
+        // $citoyen->token_fcm = $request->token_fcm;
         // $citoyen->save();
         //Avec du sql basic
-        $citoyen = app('db')->insert("INSERT INTO pfe.citoyens VALUES (DEFAULT)");
+        $citoyen = app('db')->insert("INSERT INTO pfe.citoyens VALUES ('$id', '$request->token_fcm')");
         //Retourner une valeur si insertion
         if ($citoyen)  {
-            return app('db')->connection()->getPdo()->lastInsertId();
+            // $pdo = app('db')->connection()->getPdo()->lastInsertId();
+            //lastInsertId ne fonctionne qu'avec des id auto-incrémentés et donc des integer (serial)
+            //On travaille ici avec des string vu qu'on utilisera des uuid
+            //Il faut trouver un moyen de récupérer le dernier id ajouter pour l'envoyer au citoyen
         }
     }
     

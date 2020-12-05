@@ -12,7 +12,7 @@ class Citoyen extends Model
      * @var array
      */
     protected $fillable = [
-        
+        'id_citoyen', 'token_fcm'
     ];
 
     /**
@@ -28,6 +28,13 @@ class Citoyen extends Model
      * @var string
      */
     protected $primaryKey = 'id_citoyen';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * Indicates if the model should be timestamped.

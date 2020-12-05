@@ -19,7 +19,7 @@ class MedecinController extends Controller
     
     public function show($id)
     {
-        $medecin = app('db')->select("SELECT * FROM pfe.medecins WHERE id_createur_de_qr = $id");
+        $medecin = app('db')->select("SELECT * FROM pfe.medecins WHERE id_createur_de_qr = '$id'");
         $medecin = response()->json($medecin[0]);
         // $medecin = Medecin::findOrFail($id);
 

@@ -12,7 +12,7 @@ class QrEtablissement extends Model
      * @var array
      */
     protected $fillable = [
-        'id_createur_de_qr', 'nom', 'description',
+        'id_qr_etablissement', 'id_createur_de_qr', 'nom', 'description',
     ];
 
     /**
@@ -28,6 +28,13 @@ class QrEtablissement extends Model
      * @var string
      */
     protected $primaryKey = 'id_qr_etablissement';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * Indicates if the model should be timestamped.

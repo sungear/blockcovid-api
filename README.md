@@ -85,7 +85,7 @@ post: citoyens/qr_code
 ```
 Générer un id unique
 ```
-get: citoyens/enregistrement
+post: citoyens/enregistrement
 ```
 ### Medecins
 S'inscrire
@@ -98,7 +98,7 @@ post: connexion
 ```
 Générer un QR code
 ```
-post: medecins/qr_code
+get: medecins/qr_code
 ```
 ### Etablissements
 S'inscrire
