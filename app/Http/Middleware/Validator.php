@@ -21,9 +21,9 @@ class Validator
     public function handle($request, Closure $next)
     {   
         //Déplacer toute la logique de validation dans un Service ? 
-        if ($request->type_createur) {
+        if ($request->has('type_createur')) {
             $validator = $this->validate_signup_createur_de_qr($request);            
-        } elseif ($request->mot_de_passe) {
+        } elseif ($request->has('mot_de_passe')) {
             $validator = $this->validate_signin_createur_de_qr($request);
         }
         if ($validator->fails()) {	
@@ -34,7 +34,7 @@ class Validator
 
     protected function validate_signup_createur_de_qr($request) {
         $general_rules = CreateurDeQr::rules_signup();
-        if ($request->type_createur === "M") {
+        if ($request->has('type_createur') == "M") {
             var_dump("Medecin");
             $specific_rules = Medecin::rules_signup();
         } else {

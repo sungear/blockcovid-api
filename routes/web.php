@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -18,18 +19,19 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'citoyens'], function () use ($router) { 
         $router->post('enregistrement', ['middleware' => 'uuid', 'uses' => 'CitoyenController@store']);
         //A faire le qr_code
-        $router->post('qr-code', 'FrequentationController@store');
+        $router->post('qr-code', 'CitoyenController@storeQrCode');
+            
         //A faire la mise à jour
         $router->post('mise-a-jour', 'CitoyenController@edit');
     });
 
     $router->group(['prefix' => 'medecins'], function () use ($router) {  
-        $router->post('qr-code', 'QrMedecinController@store');     
+        $router->post('qr-code', ['middleware' => 'auth', 'uses' => 'QrMedecinController@store']);     
         $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'MedecinController@store']);  
     });
 
     $router->group(['prefix' => 'etablissements'], function () use ($router) {    
-        $router->post('qr-code', 'QrEtablissementController@store'); 
+        $router->post('qr-code', ['middleware' => 'auth', 'uses' => 'QrEtablissementController@store']); 
         $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'EtablissementController@store']); 
     });
 

@@ -12,9 +12,9 @@ class QrEtablissementController extends Controller
         
     }
 
-    public function store($id)
-    {
-       //Todo
+    public function store()
+    {      
+        
     }
     
     public function edit(QrEtablissement $qr_etablissement)

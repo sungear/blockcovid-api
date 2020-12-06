@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medecin;
-use App\Models\CreateurDeQr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -19,23 +18,12 @@ class MedecinController extends Controller
     {
         
         if ($request->errors) {
-            return response()->json(["errors" => $request->errors], 422);
+            return response()->json(['status' => 'error', 'messages' => $request->errors], 422);
         }
-
-        $email = $request->input('email');
-        $mot_de_passe = $request->input('mot_de_passe');
-
-        //A placer la création d'un Createur de QR dans un Trait 
-        //ou placer la création elle même dans CreateurDeQrController
+        
         app('db')->beginTransaction();
         try {            
-            $createur_de_qr = CreateurDeQr::create([
-                'id_createur_de_qr' => $request->uuid,
-                'email' => $email,
-                'numero' => $request->input('numero'),
-                'mot_de_passe' => Hash::make($mot_de_passe),
-                'type_createur' => $request->input('type_createur')
-            ]);
+            $createur_de_qr = app()->call('App\Http\Controllers\CreateurDeQrController@store');
             $medecin = $createur_de_qr->medecin()->save(new Medecin([
                 'nom' => $request->input('nom'),
                 'prenom' => $request->input('prenom')
@@ -43,12 +31,12 @@ class MedecinController extends Controller
             app('db')->commit();
         } catch(\Illuminate\Database\QueryException $e){
             app('db')->rollBack();
-            return response()->json(['error' => 'Erreur interne'], 500);
+            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         }
 
         $token = Auth::attempt([
-            'email' => $email,
-            'password' => $mot_de_passe
+            'email' => $request->input('email'),
+            'password' => $request->input('mot_de_passe')
         ]);
 
         return $this->respondWithToken($token, [

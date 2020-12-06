@@ -7,6 +7,7 @@ use App\Models\Etablissement;
 use App\Models\Medecin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CreateurDeQrController extends Controller
 {
@@ -39,6 +40,21 @@ class CreateurDeQrController extends Controller
         ]);
     }
 
+    public function show()
+    {
+        $createur_de_qr = Auth::user();
+        if($createur_de_qr->type_createur == 'E') {
+            $additional_info = Etablissement::whereKey($createur_de_qr->id_createur_de_qr)->first();
+        } else {
+            $additional_info = Medecin::whereKey($createur_de_qr->id_createur_de_qr)->first();
+        }
+        return response()->json([
+            'status' => 200,
+            'info_supplementaire' => $additional_info,
+            'createur_de_qr' => $createur_de_qr
+        ], 200);
+    }
+
     public function create(Request $request)
     {
         
@@ -46,12 +62,14 @@ class CreateurDeQrController extends Controller
 
     public function store(Request $request)
     {
-        
-    }
-    
-    public function show()
-    {
-        return response()->make('Vous avez accès à cette route');
+        return CreateurDeQr::create([
+            'id_createur_de_qr' => $request->uuid,
+            'email' => $request->input('email'),
+            'numero' => $request->input('numero'),
+            'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
+            'mot_de_passe' => $request->input('mot_de_passe'),
+            'type_createur' => $request->input('type_createur')
+        ]);
     }
     
     public function edit(CreateurDeQr $createur_de_qr)

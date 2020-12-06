@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+// use Illuminate\Database\QueryException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
@@ -56,5 +57,25 @@ class Handler extends ExceptionHandler
         //         'HTTP_METHOD_NOT_ALLOWED', $exception);
         //     }
         return parent::render($request, $exception);
+
+
+        // if ($e instanceof ModelNotFoundException) {
+        //     $response_code = Response::HTTP_NOT_FOUND;
+        //     $e = new NotFoundHttpException('Resource non trouvée.', $e);
+        // } elseif ($e instanceof NotFoundHttpException) {
+        //     $response_code = Response::HTTP_NOT_FOUND;
+        //     $e = new NotFoundHttpException('Service non trouvé.', $e);
+        // } elseif ($e instanceof QueryException) {
+        //     $response_code = Response::HTTP_INTERNAL_SERVER_ERROR;
+        //     $e = new QueryException('Requête échouée.', $e);
+        // } else {
+        //     $response_code = Response::HTTP_INTERNAL_SERVER_ERROR;
+        //     $e = new HttpException($response_code, 'Erreur interne au serveur.');
+        // }
+
+        // return response()->json([
+        //     'response_code' => $response_code,
+        //     'response_message' => $e->getMessage()
+        // ], $response_code);
     }
 }
