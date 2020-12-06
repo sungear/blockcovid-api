@@ -40,7 +40,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     //A faire avec Authenticate ?
-    $router->post('connexion', 'CreateurDeQrController@login');  
+    $router->get('connexion', 'CreateurDeQrController@login');  
     
     $router->get('/', function () use ($router) {
         return 'api de BlockCovid groupe 10';
