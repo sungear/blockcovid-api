@@ -34,7 +34,7 @@ class Validator
 
     protected function validate_signup_createur_de_qr($request) {
         $general_rules = CreateurDeQr::rules_signup();
-        if ($request->has('type_createur') == "M") {
+        if ($request->input('type_createur') == "M") {
             var_dump("Medecin");
             $specific_rules = Medecin::rules_signup();
         } else {

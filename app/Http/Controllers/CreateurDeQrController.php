@@ -67,7 +67,6 @@ class CreateurDeQrController extends Controller
             'email' => $request->input('email'),
             'numero' => $request->input('numero'),
             'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
-            'mot_de_passe' => $request->input('mot_de_passe'),
             'type_createur' => $request->input('type_createur')
         ]);
     }
