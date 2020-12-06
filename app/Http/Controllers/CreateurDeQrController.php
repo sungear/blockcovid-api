@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CreateurDeQr;
 use App\Models\Medecin;
+use App\Models\Etablissements;
 use Illuminate\Http\Request;
 
 class CreateurDeQrController extends Controller
