@@ -38,7 +38,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'tests'], function () use ($router) {     
         $router->get('medecin/{id}', 'MedecinController@show'); 
         $router->get('citoyens/all', 'CitoyenController@showAll');  
-        $router->get('medecins/all', 'MedecinController@showAll'); 
+        $router->get('medecins/all', 'MedecinController@showAll');
+        $router->get('etablissement/{id}', 'EtablissementController@show');
+        $router->get('etablissements/all', 'EtablissementController@showAll');
     });
 
     //A faire avec Authenticate ?

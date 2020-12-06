@@ -16,8 +16,7 @@ class MedecinController extends Controller
     {
         
         if ($request->errors) {
-            var_dump("test");
-            return response()->json(['status' => 'error', 'message' => $request->errors], 422);
+            return response()->json(['status' => 'error', 'messages' => $request->errors], 422);
         }
         
         app('db')->beginTransaction();
