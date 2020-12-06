@@ -16,7 +16,7 @@ return [
     'providers' => [
         'createurs_de_qr' => [
             'driver' => 'eloquent',
-            'model' => \App\CreateurDeQr::class
+            'model' => \App\Models\CreateurDeQr::class
         ]
     ]
 ];

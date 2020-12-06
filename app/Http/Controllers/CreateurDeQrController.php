@@ -3,25 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\CreateurDeQr;
+use App\Models\Etablissement;
 use App\Models\Medecin;
-use App\Models\Etablissements;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CreateurDeQrController extends Controller
 {
     public function login(Request $request) {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'mot_de_passe' => 'required|string'
+        if ($request->errors) {
+            return response()->json(["errors" => $request->errors], 422);
+        }
+
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('mot_de_passe')
+        ];
+
+        if(! $token = Auth::attempt($credentials)) {
+            return response()->json(['status'=> 401, 'message' => 'Une ou plusieurs informations sont erronées'], 401);
+        }
+
+        // L'utilisateur est authentifié, on peut aller chercher ses informations
+        $createur_de_qr = CreateurDeQr::whereEmail($credentials['email'])->first();
+        if($createur_de_qr->type_createur == 'E') {
+            $additional_info = Etablissement::whereKey($createur_de_qr->id_createur_de_qr)->first();
+        } else {
+            $additional_info = Medecin::whereKey($createur_de_qr->id_createur_de_qr)->first();
+        }
+
+        return $this->respondWithToken($token, [
+            'message' => 'Connexion réussie',
+            'createur_de_qr' => $createur_de_qr,
+            'info_supplementaire' => $additional_info
         ]);
-
-        $login_informations = $request->only(['email', 'mot_de_passe']);
-
-        // if(! $login_informations = Auth::attempt($login_informations)) {
-        //     return response()->json(['status'=> 401, 'message' => 'Une ou plusieurs informations sont erronées'], 401);
-        // }
-        return $this->respondWithToken($login_informations);
     }
 
     public function create(Request $request)
@@ -34,11 +49,9 @@ class CreateurDeQrController extends Controller
         
     }
     
-    public function show($id)
+    public function show()
     {
-        // $createur_de_qr = Medecin::all();
-
-        // return Medecin::findOrFail($id);
+        return response()->make('Vous avez accès à cette route');
     }
     
     public function edit(CreateurDeQr $createur_de_qr)

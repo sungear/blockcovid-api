@@ -39,10 +39,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('medecins/all', 'MedecinController@showAll');
         $router->get('etablissement/{id}', 'EtablissementController@show');
         $router->get('etablissements/all', 'EtablissementController@showAll');
+        $router->get('createurs-de-qr/me', ['middleware' => 'auth', 'uses' => 'CreateurDeQrController@show']);
     });
 
-    //A faire avec Authenticate ?
-    $router->get('connexion', 'CreateurDeQrController@login');  
+    $router->get('connexion', ['middleware' => 'validator', 'uses' => 'CreateurDeQrController@login']);  
     
     $router->get('/', function () use ($router) {
         return 'api de BlockCovid groupe 10';

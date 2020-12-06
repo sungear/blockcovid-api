@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Etablissement;
 use App\Models\CreateurDeQr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class EtablissementController extends Controller
 {   
@@ -19,14 +21,16 @@ class EtablissementController extends Controller
             return response()->json(["errors" => $request->errors], 422);
         }
 
+        $email = $request->input('email');
+        $mot_de_passe = $request->input('mot_de_passe');
+
         app('db')->beginTransaction();
         try {
             $createur_de_qr = CreateurDeQr::create([
                 'id_createur_de_qr' => $request->uuid,
-                'email' => $request->input('email'),
+                'email' => $email,
                 'numero' => $request->input('numero'),
-                // 'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
-                'mot_de_passe' => $request->input('mot_de_passe'),
+                'mot_de_passe' => Hash::make($mot_de_passe),
                 'type_createur' => $request->input('type_createur')
             ]);
             $etablissement = $createur_de_qr->etablissement()->save(new Etablissement([
@@ -34,11 +38,21 @@ class EtablissementController extends Controller
                 'adresse' => $request->input('adresse')
             ]));
             app('db')->commit();
-            return response()->json($etablissement, 200);
         } catch(\Illuminate\Database\QueryException $e){
             app('db')->rollBack();
             return response()->json(['error' => 'Erreur interne'], 500);
         }
+
+        $token = Auth::attempt([
+            'email' => $email,
+            'password' => $mot_de_passe
+        ]);
+
+        return $this->respondWithToken($token, [
+            'message' => 'Inscription réussie',
+            'createur_de_qr' => $createur_de_qr,
+            'info_supplementaire' => $etablissement
+        ]);
     }
 
     public function show($id)

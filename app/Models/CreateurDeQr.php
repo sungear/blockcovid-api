@@ -23,6 +23,13 @@ class CreateurDeQr extends Model implements AuthenticatableContract, Authorizabl
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['mot_de_passe'];
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -72,9 +79,19 @@ class CreateurDeQr extends Model implements AuthenticatableContract, Authorizabl
 
     public static function rules_signin() {
         return [
-            'email' => "required|email|exists",
+            'email' => "required|email|exists:pgsql.pfe.createurs_de_qr",
             'mot_de_passe' => 'required',
         ];
+    }
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->mot_de_passe;
     }
 
      /**
