@@ -44,4 +44,10 @@ class Citoyen extends Model
      */
     public $timestamps = false;
 
+    public function frequentations()
+    {
+        return $this->belongsToMany('App\Models\QrEtablissement', 'frequentations', 'id_citoyen', 'id_qr_etablissement')
+        ->withPivot('date_frequentation');
+    }
+
 }

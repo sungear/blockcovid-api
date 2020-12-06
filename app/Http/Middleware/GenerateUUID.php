@@ -16,9 +16,8 @@ class GenerateUUID
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {   
         $request->request->add(['uuid' => Uuid::uuid4()]);
-
         return $next($request);
     }
 }

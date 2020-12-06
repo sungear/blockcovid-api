@@ -42,4 +42,15 @@ class QrEtablissement extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function etablissement()
+    {
+        return $this->belongsTo('App\Models\Etablissement', 'id_createur_de_qr');
+    }
+
+    public function frequentations()
+    {
+        return $this->belongsToMany('App\Models\Citoyen', 'frequentations', 'id_qr_etablissement', 'id_citoyen')
+        ->withPivot('date_frequentation');
+    }
 }

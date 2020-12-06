@@ -81,35 +81,52 @@ VUE_APP_API_URL=https://g10-blockcovid-api-staging.herokuapp.com/api
 ### Citoyens
 Scanner un QR code
 ```
-post: citoyens/qr_code
+POST: citoyens/qr-code
 ```
 Générer un id unique
 ```
-post: citoyens/enregistrement
+POST: citoyens/enregistrement
+```
+Mettre à jour le token d'un citoyen existant
+```
+PUT: citoyens/mise-a-jour
 ```
 ### Medecins
 S'inscrire
 ```
-post: medecins/inscription
+POST: medecins/inscription
 ```
 Connexion
 ```
-post: connexion
+POST: connexion
 ```
 Générer un QR code
 ```
-get: medecins/qr_code
+GET: medecins/qr-code
 ```
 ### Etablissements
 S'inscrire
 ```
-post: etablissements/inscription
+POST: etablissements/inscription
 ```
 Connexion
 ```
-post: connexion
+POST: connexion
 ```
 Générer un QR code
 ```
-post: etablissements/qr_code
+POST: etablissements/qr-code
+```
+### Test
+Renvoie un médecin selon son id (erreur non gérée) -> id_citoyen=1 existe dans la DB
+```
+GET: tests/medecin/{id}
+```
+Renvoie tous les citoyens
+```
+GET: tests/citoyens/all
+```
+Renvoie les noms et prénoms de tous les médecins
+```
+GET: tests/medecins/all
 ```

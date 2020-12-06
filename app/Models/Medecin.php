@@ -42,4 +42,21 @@ class Medecin extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function createur_de_qr()
+    {
+        return $this->belongsTo('App\Models\CreateurDeQr', 'id_createur_de_qr');
+    }
+
+    public function qr_medecins()
+    {
+        return $this->hasMany('App\Models\QrMedecin', 'id_createur_de_qr');
+    }
+
+    public static function rules_signup() {
+        return [
+            'nom' =>  'required|min:1',
+            'prenom' => 'required|min:1'
+        ];
+    }
 }

@@ -42,4 +42,9 @@ class CreateurDeQr extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function medecin()
+    {
+        return $this->belongsTo('App\Models\Medecin', 'id_createur_de_qr');
+    }
 }

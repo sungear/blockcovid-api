@@ -14,15 +14,16 @@ class CitoyenController extends Controller
 
     public function store(Request $request)
     {
-        try {
+        try {            
+            //A check si id_citoyen et token_fcm ont chancun donné et si unique       
+                        
             $citoyen = Citoyen::create([
                 'token_fcm' => $request->input('token_fcm'),
                 'id_citoyen' => $request->uuid
             ]);
             return response()->json(['status' => 200, 'id_citoyen' => $citoyen->id_citoyen]);
-        } catch (\Illuminate\Database\QueryException $e) {
-            
-            return response()->json(['status' => 500, 'message' => 'Erreur interne']);
+        } catch (\Illuminate\Database\QueryException $e) {            
+            return response()->json(['error' => 'Erreur interne'], 500);
         } 
     }
     

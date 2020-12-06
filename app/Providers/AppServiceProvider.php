@@ -13,6 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //app('translator')->setLocale('en');
+    }
+
+    public function boot()
+    {
+        app('translator')->setLocale('fr');
     }
 }

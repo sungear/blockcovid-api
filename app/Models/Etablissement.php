@@ -42,4 +42,21 @@ class Etablissement extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function createur_de_qr()
+    {
+        return $this->belongsTo('App\Models\CreateurDeQr', 'id_createur_de_qr');
+    }
+
+    public function qr_etablissements()
+    {
+        return $this->hasMany('App\Models\QrEtablissement', 'id_createur_de_qr');
+    }
+
+    public static function rules_signup() {
+        return [
+            'nom' =>  'required|min:1',
+            'adresse' => 'required|min:1'
+        ];
+    }
 }

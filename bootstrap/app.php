@@ -88,6 +88,10 @@ $app->routeMiddleware([
     'uuid' => App\Http\Middleware\GenerateUUID::class
 ]);
 
+$app->routeMiddleware([
+    'validator' => App\Http\Middleware\Validator::class
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
@@ -99,7 +103,7 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
