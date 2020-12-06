@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CreateurDeQr;
+use App\Models\Medecin;
+use App\Models\Etablissements;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
