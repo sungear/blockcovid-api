@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -18,7 +19,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'citoyens'], function () use ($router) { 
         $router->post('enregistrement', ['middleware' => 'uuid', 'uses' => 'CitoyenController@store']);
         //A faire le qr_code
-        $router->post('qr-code', 'FrequentationController@store');
+        $router->post('qr-code', 'CitoyenController@storeQrCode');
+            
         //A faire la mise à jour
         $router->post('mise-a-jour', 'CitoyenController@edit');
     });

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medecin;
-use App\Models\CreateurDeQr;
 use Illuminate\Http\Request;
 
 class MedecinController extends Controller
@@ -17,22 +16,13 @@ class MedecinController extends Controller
     {
         
         if ($request->errors) {
-            return response()->json(["errors" => $request->errors], 422);
+            var_dump("test");
+            return response()->json(['status' => 'error', 'message' => $request->errors], 422);
         }
-
-        //A placer la création d'un Createur de QR dans un Trait 
-        //ou placer la création elle même dans CreateurDeQrController
         
         app('db')->beginTransaction();
         try {            
-            $createur_de_qr = CreateurDeQr::create([
-                'id_createur_de_qr' => $request->uuid,
-                'email' => $request->input('email'),
-                'numero' => $request->input('numero'),
-                // 'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
-                'mot_de_passe' => $request->input('mot_de_passe'),
-                'type_createur' => $request->input('type_createur')
-            ]);
+            $createur_de_qr = app()->call('App\Http\Controllers\CreateurDeQrController@store');
             $medecin = $createur_de_qr->medecin()->save(new Medecin([
                 'nom' => $request->input('nom'),
                 'prenom' => $request->input('prenom')
@@ -41,7 +31,7 @@ class MedecinController extends Controller
             return response()->json($medecin, 200);
         } catch(\Illuminate\Database\QueryException $e){
             app('db')->rollBack();
-            return response()->json(['error' => 'Erreur interne'], 500);
+            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         }
     }
     

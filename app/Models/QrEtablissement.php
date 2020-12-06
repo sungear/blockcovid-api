@@ -50,7 +50,7 @@ class QrEtablissement extends Model
 
     public function frequentations()
     {
-        return $this->belongsToMany('App\Models\Citoyen', 'frequentations', 'id_qr_etablissement', 'id_citoyen')
+        return $this->belongsToMany('App\Models\Citoyen', 'pfe.frequentations', 'id_qr_etablissement', 'id_citoyen')
         ->withPivot('date_frequentation');
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CreateurDeQr;
-use App\Models\Medecin;
 use Illuminate\Http\Request;
 
 class CreateurDeQrController extends Controller
@@ -15,14 +14,19 @@ class CreateurDeQrController extends Controller
 
     public function store(Request $request)
     {
-        
+        return CreateurDeQr::create([
+            'id_createur_de_qr' => $request->uuid,
+            'email' => $request->input('email'),
+            'numero' => $request->input('numero'),
+            // 'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
+            'mot_de_passe' => $request->input('mot_de_passe'),
+            'type_createur' => $request->input('type_createur')
+        ]);
     }
     
     public function show($id)
-    {
-        // $createur_de_qr = Medecin::all();
-
-        // return Medecin::findOrFail($id);
+    {        
+        return CreateurDeQr::FindOrFail($id);
     }
     
     public function edit(CreateurDeQr $createur_de_qr)

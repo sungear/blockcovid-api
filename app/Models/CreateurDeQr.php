@@ -65,7 +65,7 @@ class CreateurDeQr extends Model
 
     public static function rules_signin() {
         return [
-            'email' => "required|email|exists",
+            'email' => "required|email|exists:pgsql.pfe.createurs_de_qr",
             'mot_de_passe' => 'required',
         ];
     }
