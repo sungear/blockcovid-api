@@ -138,3 +138,7 @@ Renvoie la liste des établissement en DB
 ```
 GET: tests/etablissements/all
 ```
+Envoie une notification à un ou plusieurs appareils
+```
+GET: tests/citoyens/notify
+```
