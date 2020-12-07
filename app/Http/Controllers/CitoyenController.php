@@ -4,12 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Citoyen;
 use Illuminate\Http\Request;
+use App\Services\NotificationService;
 
 class CitoyenController extends Controller
 {   
     public function create()
     {
         
+    }
+
+    public function notify(Request $request)
+    {
+        $tokens = $request->input('tokens');
+
+        if(gettype($tokens) == 'string') {
+            $tokens = json_decode($tokens);
+        };
+
+        $failures = (new NotificationService)->notifyMulticast($tokens, 'This is a title', 'This is a body');
+        
+        if($failures) {
+            return response()->json($failures);
+        }
+
+        return 'Success';
     }
 
     public function store(Request $request)

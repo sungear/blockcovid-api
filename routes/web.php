@@ -39,10 +39,14 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('etablissement/{id}', 'EtablissementController@show');
         $router->get('etablissements/all', 'EtablissementController@showAll');
         $router->get('createurs-de-qr/me', ['middleware' => 'auth', 'uses' => 'CreateurDeQrController@show']);
+<<<<<<< HEAD
         $router->get('qr_medecin/{id}', 'QrMedecinController@show');
         $router->get('qr_medecins/all', 'QrMedecinController@showAll');
         $router->get('qr_etablissement/{id}', 'QrEtablissementController@show');
         $router->get('qr_etablissements/all', 'QrEtablissementController@showAll');
+=======
+        $router->get('citoyens/notify', 'CitoyenController@notify');
+>>>>>>> d642df955193ac2e2308a9d6bc933bee15503936
     });
 
     $router->post('connexion', ['middleware' => 'validator', 'uses' => 'CreateurDeQrController@login']);  
