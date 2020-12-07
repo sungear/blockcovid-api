@@ -23,12 +23,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'medecins'], function () use ($router) {  
-        $router->post('qr-code', ['middleware' => 'auth', 'uses' => 'QrMedecinController@store']);     
+        $router->get('qr-code', ['middleware' => ['auth', 'uuid'], 'uses' => 'QrMedecinController@store']);     
         $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'MedecinController@store']);  
     });
 
     $router->group(['prefix' => 'etablissements'], function () use ($router) {    
-        $router->post('qr-code', ['middleware' => 'auth', 'uses' => 'QrEtablissementController@store']); 
+        $router->post('qr-code', ['middleware' => ['auth', 'uuid'], 'uses' => 'QrEtablissementController@store']); 
         $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'EtablissementController@store']); 
     });
 
@@ -39,6 +39,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('etablissement/{id}', 'EtablissementController@show');
         $router->get('etablissements/all', 'EtablissementController@showAll');
         $router->get('createurs-de-qr/me', ['middleware' => 'auth', 'uses' => 'CreateurDeQrController@show']);
+        $router->get('qr_medecin/{id}', 'QrMedecinController@show');
+        $router->get('qr_medecins/all', 'QrMedecinController@showAll');
+        $router->get('qr_etablissement/{id}', 'QrEtablissementController@show');
+        $router->get('qr_etablissements/all', 'QrEtablissementController@showAll');
     });
 
     $router->post('connexion', ['middleware' => 'validator', 'uses' => 'CreateurDeQrController@login']);  
