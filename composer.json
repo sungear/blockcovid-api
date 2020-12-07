@@ -10,6 +10,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "kreait/laravel-firebase": "^3.0",
         "laravel/lumen-framework": "^8.0",
         "ramsey/uuid": "^4.1",
         "tymon/jwt-auth": "dev-develop"
