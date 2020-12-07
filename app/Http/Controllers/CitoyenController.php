@@ -65,9 +65,23 @@ class CitoyenController extends Controller
         return $citoyens;
     }
     
-    public function edit(Citoyen $citoyen)
+    public function edit(Request $request)
     {
-        //
+        //Deplacer toute la logique de validation dans un Service !
+        $validator = app('validator')->make($request->input(), [
+            'id_citoyen' => 'required|exists:pgsql.pfe.citoyens',
+            'token_fcm' => 'required'
+        ], trans('validations'));
+
+        if ($validator->fails()) {	
+            return response()->json(['status' => 'error', 'message' => $validator->messages()], 422);                
+        }
+
+        $id_citoyen = $request->input('id_citoyen');
+        $token_fcm = $request->input('token_fcm');
+        $citoyen = Citoyen::whereKey($id_citoyen)->update('token_fcm', $token_fcm);
+
+        return $citoyen;
     }
     
     public function update(Request $request, Citoyen $citoyen)
