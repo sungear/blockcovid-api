@@ -55,11 +55,9 @@ class EtablissementController extends Controller
 
     public function showAll()
     {
-        //avec un query builder
-        $createur_de_qr = app('db')->table('pfe.etablissements')->get();
-        //avec du sql basic
-        // $createur_de_qr = app('db')->select("SELECT * FROM pfe.etablissements");
-        // $createur_de_qr = response()->json($createur_de_qr);
+        $createur_de_qr = app('db')->table('pfe.etablissements')
+        ->join('pfe.createurs_de_qr', 'pfe.createurs_de_qr.id_createur_de_qr', 
+        '=', 'pfe.etablissements.id_createur_de_qr')->get();
         return $createur_de_qr;
     }
     

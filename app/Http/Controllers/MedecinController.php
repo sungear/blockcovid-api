@@ -56,12 +56,10 @@ class MedecinController extends Controller
     }
     
     public function showAll()
-    {
-        //Avec un query builder
-        $createur_de_qr = app('db')->table('pfe.medecins')->get();
-        //Avec du sql basic
-        // $citoyens = app('db')->select("SELECT * FROM pfe.citoyens");
-        // $citoyens = response()->json($citoyens);
+    { 
+        $createur_de_qr = app('db')->table('pfe.medecins')
+        ->join('pfe.createurs_de_qr', 'pfe.createurs_de_qr.id_createur_de_qr', 
+        '=', 'pfe.medecins.id_createur_de_qr')->get();
         return $createur_de_qr;
     }
     

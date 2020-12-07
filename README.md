@@ -118,15 +118,23 @@ Générer un QR code
 POST: etablissements/qr-code
 ```
 ### Test
-Renvoie un médecin selon son id (erreur non gérée) -> id_citoyen=1 existe dans la DB
-```
-GET: tests/medecin/{id}
-```
 Renvoie tous les citoyens
 ```
 GET: tests/citoyens/all
 ```
-Renvoie les noms et prénoms de tous les médecins
+Renvoie un médecin selon son id (erreur non gérée) -> id=1 existe dans la DB
+```
+GET: tests/medecin/{id}
+```
+Renvoie la liste des médecins en DB
 ```
 GET: tests/medecins/all
+```
+Renvoie un établissement selon son id (erreur non gérée) -> id=2 existe dans la DB
+```
+GET: tests/etablissement/{id}
+```
+Renvoie la liste des établissement en DB
+```
+GET: tests/etablissements/all
 ```
