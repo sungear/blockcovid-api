@@ -37,16 +37,16 @@ class QrMedecinController extends Controller
             }
             $qr_medecin->est_scan = true;
             $qr_medecin->save();
+
+            $this->dispatch(new \App\Jobs\TrouverCitoyensARisqueJob($request->input('id_citoyen'), 
+            $request->input('date_scan')));
+           
             return response()->json(['status' => 'success', 'message' => 'Scan validé', 
             'id_qr_medecin' => $qr_medecin->id_qr_medecin], 200);
-            /*************************************************************************/
-            //Here calls a Job to take care of finding and notifying citizens at risk
-            //Faire appel au champs "date" du qr code scanné
-            /*************************************************************************/
         } catch (ModelNotFoundException $e) {
             return response()->json(['status' => 'error', 'message' => 'Qr Code incorrect'], 440);
         } catch (\Illuminate\Database\QueryException $e) {            
-            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
     }
 

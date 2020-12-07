@@ -30,6 +30,13 @@ class QrMedecin extends Model
     protected $primaryKey = 'id_qr_medecin';
 
     /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool

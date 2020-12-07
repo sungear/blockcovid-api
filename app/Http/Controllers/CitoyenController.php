@@ -35,7 +35,7 @@ class CitoyenController extends Controller
             'id_citoyen' => 'required|exists:pgsql.pfe.citoyens',
             'type_createur' => ['required', 'max:1', 'regex:/^M|E$/u'],
             'id_qr_code' => 'required',
-            'date_entree' => 'required|date'
+            'date_scan' => 'required|date'
         ], trans("validations"));
         if ($validator->fails()) {	
             return response()->json(['status' => 'error', 'message' => $validator->messages()], 422);                

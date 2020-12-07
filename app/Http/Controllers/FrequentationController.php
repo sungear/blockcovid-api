@@ -21,7 +21,7 @@ class FrequentationController extends Controller
             var_dump('citoyen = ', $request->input('id_citoyen'));
             var_dump('etabli = ', $qr_etablissement->id_qr_etablissement);
             $qr_etablissement->frequentations()->attach($request->input('id_citoyen'), 
-            ['date_frequentation' => $request->input('date_entree')]);
+            ['date_frequentation' => $request->input('date_scan')]);
             //Tout s'est bien passer            
             return response()->json(['status' => 'success', 'message' => 'Scan validé', 
             'id_qr_etablissement' => $qr_etablissement->id_qr_etablissement], 200);
@@ -29,7 +29,6 @@ class FrequentationController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } 
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {  
-            var_dump("test");          
             return response()->json(['status' => 'error', 'message' => 'Qr Code incorrect'], 440);
         }
     }
