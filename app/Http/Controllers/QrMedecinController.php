@@ -30,12 +30,11 @@ class QrMedecinController extends Controller
                 'id_qr_medecin' => $request->input('uuid'),
                 'est_scan' => FALSE
             ]));
-            var_dump("ok");
             app('db')->commit();
+            dd($qr_medecin );
         } catch (\Illuminate\Database\QueryException $e){
             app('db')->rollBack();
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
-            //return response()->json(['status' => 'error', 'message' => $e->getMessage() ], 500);
         }
 
         return $this->respondWithToken( [

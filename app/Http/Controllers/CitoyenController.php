@@ -39,7 +39,7 @@ class CitoyenController extends Controller
                 'token_fcm' => $request->input('token_fcm'),
                 'id_citoyen' => $request->uuid
             ]);
-            return response()->json(['status' => 200, 'id_citoyen' => $citoyen->id_citoyen]);
+            return response()->json(['status' => 201, 'id_citoyen' => $citoyen->id_citoyen]);
         } 
         catch (\Illuminate\Database\QueryException $e) {            
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
@@ -97,9 +97,8 @@ class CitoyenController extends Controller
 
         $id_citoyen = $request->input('id_citoyen');
         $token_fcm = $request->input('token_fcm');
-        $citoyen = Citoyen::whereKey($id_citoyen)->update('token_fcm', $token_fcm);
-
-        return $citoyen;
+        Citoyen::whereKey($id_citoyen)->update(['token_fcm' => $token_fcm]);
+        return response()->json(['status' => 'success', 'message' => 'Token mis à jour'], 200);;
     }
     
     public function update(Request $request, Citoyen $citoyen)
