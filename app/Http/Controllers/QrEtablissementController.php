@@ -24,17 +24,19 @@ class QrEtablissementController extends Controller
                 'nom' => $request->input('nom'),
                 'description' => $request->input('description')
             ]));
+            
+            return response()->json([
+                "status" => 200,
+                "message" => 'Creation de QR réussie',
+                "type_createur" => $createur_de_qr->type_createur,
+                "id_qr_code" => $qr_etablissement->id_qr_etablissement
+            ], 200);
+
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
             return response()->json(['status' => 'error', 'messages' => 'Accès non autorisé'], 401);
         }
-
-        return $this->respondWithToken( [
-            'message' => 'Creation du QR réussie',
-            'id_etablissement' => $createur_de_qr,
-            'info_supplementaire' => $qr_etablissement
-        ]);
     }
 
     public function show($id)

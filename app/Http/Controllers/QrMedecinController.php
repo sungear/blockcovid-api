@@ -24,18 +24,20 @@ class QrMedecinController extends Controller
                 'id_createur_de_qr' => $createur_de_qr->id_createur_de_qr,
                 'id_qr_medecin' => $request->input('uuid'),
                 'est_scan' => FALSE
-            ]));
+            ]));            
+            
+            return response()->json([
+                "status" => 200,
+                "message" => 'Creation de QR réussie',
+                "type_createur" => $createur_de_qr->type_createur,
+                "id_qr_code" => $qr_medecin->id_qr_medecin
+            ], 200);
+
         } catch (\Illuminate\Database\QueryException $e){
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
             return response()->json(['status' => 'error', 'messages' => 'Accès non autorisé'], 401);
         }
-
-        return $this->respondWithToken( [
-            'message' => 'Creation du QR réussie',
-            'id_medecin' => $createur_de_qr,
-            'info_supplementaire' => $qr_medecin
-        ]);
 
     }
     
