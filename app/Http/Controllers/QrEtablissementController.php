@@ -15,13 +15,8 @@ class QrEtablissementController extends Controller
 
     public function store(Request $request)
     {      
-        if ($request->errors) {
-            return response()->json(['status' => 'error', 'messages' => $request->errors], 422);
-        }
-
-        app('db')->beginTransaction();
+        $createur_de_qr = Auth::user();
         try {
-            $createur_de_qr = Auth::user();
             $etablissement = \App\Models\Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
             $qr_etablissement = $etablissement->qr_etablissements()->save(new QrEtablissement([
                 'id_createur_de_qr' => $createur_de_qr->id_createur_de_qr,
@@ -29,10 +24,10 @@ class QrEtablissementController extends Controller
                 'nom' => $request->input('nom'),
                 'description' => $request->input('description')
             ]));
-            app('db')->commit();
         } catch (\Illuminate\Database\QueryException $e) {
-            app('db')->rollBack();
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return response()->json(['status' => 'error', 'messages' => 'Accès non autorisé'], 401);
         }
 
         return $this->respondWithToken( [
