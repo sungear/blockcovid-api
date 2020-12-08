@@ -24,7 +24,7 @@ class CitoyenTest extends TestCase
 
         $response = $this->json('POST', '/api/citoyens/enregistrement', $citoyen_array)
         ->seeJson([
-            'status' => 201
+            'status' => 200
         ])->response->getContent();
         $this->assertNotNull(json_decode($response)->id_citoyen);
         $this->seeInDatabase('pfe.citoyens', ['token_fcm' => $citoyen->token_fcm]); 
@@ -50,19 +50,19 @@ class CitoyenTest extends TestCase
         'id_citoyen' => $citoyen_array['id_citoyen']]);
     }  
     
-    public function test_citoyen_scan_qr_code_medecin()
-    {
+    // public function test_citoyen_scan_qr_code_medecin()
+    // {
         
-    } 
+    // } 
     
-    public function test_citoyen_scan_qr_code_etablssement()
-    {
+    // public function test_citoyen_scan_qr_code_etablssement()
+    // {
         
-    }  
+    // }  
     
-    public function test_citoyen_id_lost()
-    {
+    // public function test_citoyen_id_lost()
+    // {
         
-    } 
+    // } 
    
 }
