@@ -30,7 +30,6 @@ class QrMedecinController extends Controller
                 'id_qr_medecin' => $request->input('uuid'),
                 'est_scan' => FALSE
             ]));
-            var_dump("ok");
             app('db')->commit();
         } catch (\Illuminate\Database\QueryException $e){
             app('db')->rollBack();
