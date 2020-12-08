@@ -35,10 +35,8 @@ class Validator
     protected function validate_signup_createur_de_qr($request) {
         $general_rules = CreateurDeQr::rules_signup();
         if ($request->input('type_createur') == "M") {
-            var_dump("Medecin");
             $specific_rules = Medecin::rules_signup();
         } else {
-            var_dump("Etablissement");
             $specific_rules = Etablissement::rules_signup();
         }
         return app('validator')->make($request->input(), array_merge($general_rules, $specific_rules), trans("validations"));			

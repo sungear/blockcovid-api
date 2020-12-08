@@ -32,18 +32,26 @@ class CitoyenController extends Controller
 
     public function store(Request $request)
     {
-        try {            
-            //A check si id_citoyen et token_fcm ont chancun donné et si unique       
-                        
-            $citoyen = Citoyen::create([
-                'token_fcm' => $request->input('token_fcm'),
-                'id_citoyen' => $request->uuid
-            ]);
-            return response()->json(['status' => 201, 'id_citoyen' => $citoyen->id_citoyen]);
-        } 
-        catch (\Illuminate\Database\QueryException $e) {            
-            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
-        } 
+        $this->validate($request, [
+            'token_fcm' => 'required'
+        ]);
+        // On vérifie d'abord si un citoyen en db est associé à cette token
+        // Si oui, on l'utilise
+        $citoyen = Citoyen::where('token_fcm', $request->input('token_fcm'))->first();
+        
+        if(!$citoyen) {
+            // Sinon, on crée un nouveau citoyen en db pour cette token
+            try {            
+                $citoyen = Citoyen::create([
+                    'token_fcm' => $request->input('token_fcm'),
+                    'id_citoyen' => $request->uuid
+                ]);
+            } 
+            catch (\Illuminate\Database\QueryException $e) {            
+                return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
+            }
+        }
+        return response()->json(['status' => 200, 'id_citoyen' => $citoyen->id_citoyen]);
     }
 
     public function storeQrCode(Request $request)
@@ -98,7 +106,8 @@ class CitoyenController extends Controller
         $id_citoyen = $request->input('id_citoyen');
         $token_fcm = $request->input('token_fcm');
         Citoyen::whereKey($id_citoyen)->update(['token_fcm' => $token_fcm]);
-        return response()->json(['status' => 'success', 'message' => 'Token mis à jour'], 200);;
+
+        return response()->json(['status' => 'success', 'message' => 'Token mise à jour'], 200);
     }
     
     public function update(Request $request, Citoyen $citoyen)
