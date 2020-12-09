@@ -50,6 +50,7 @@ class CreateurDeQrController extends Controller
         }
         return response()->json([
             'status' => 200,
+            'message' => 'Connexion réussie',
             'info_supplementaire' => $additional_info,
             'createur_de_qr' => $createur_de_qr
         ], 200);

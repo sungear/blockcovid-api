@@ -42,7 +42,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('citoyens/notify', 'CitoyenController@notify');
     });
 
-    $router->post('connexion', ['middleware' => 'validator', 'uses' => 'CreateurDeQrController@login']);  
+    $router->post('connexion', ['middleware' => 'validator', 'uses' => 'CreateurDeQrController@login']);
+    $router->get('connexion-token', ['middleware' => 'auth', 'uses' => 'CreateurDeQrController@show']);
     
     $router->get('/', function () use ($router) {
         return 'api de BlockCovid groupe 10';

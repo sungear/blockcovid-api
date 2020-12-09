@@ -100,6 +100,10 @@ Connexion
 ```
 POST: connexion
 ```
+Connexion token
+```
+GET: connexion-token
+```
 Générer un QR code
 ```
 GET: medecins/qr-code
@@ -112,6 +116,10 @@ POST: etablissements/inscription
 Connexion
 ```
 POST: connexion
+```
+Connexion token
+```
+GET: connexion-token
 ```
 Générer un QR code
 ```
