@@ -22,7 +22,7 @@ class CreateurDeQrController extends Controller
         ];
 
         if(! $token = Auth::attempt($credentials)) {
-            return response()->json(['status'=> 401, 'message' => 'Une ou plusieurs informations sont erronées'], 401);
+            return response()->json(['status'=> 'error', 'message' => 'Le mot de passe est incorrect.', 'errors' => [ 'mot_de_passe' => [ 'Le mot de passe est incorrect.' ]]], 422);
         }
 
         // L'utilisateur est authentifié, on peut aller chercher ses informations
