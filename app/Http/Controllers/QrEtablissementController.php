@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etablissement;
 use App\Models\QrEtablissement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class QrEtablissementController extends Controller
     {      
         $createur_de_qr = Auth::user();
         try {
-            $etablissement = \App\Models\Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
+            $etablissement = Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
             $qr_etablissement = $etablissement->qr_etablissements()->save(new QrEtablissement([
                 'id_createur_de_qr' => $createur_de_qr->id_createur_de_qr,
                 'id_qr_etablissement' => $request->input('uuid'),
@@ -51,7 +52,7 @@ class QrEtablissementController extends Controller
     {
         $createur_de_qr = Auth::user();
         try {
-            $etablissement = \App\Models\Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
+            $etablissement = Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
             $qr_codes = QrEtablissement::where('id_createur_de_qr', $etablissement->id_createur_de_qr)->get();
             return response()->json(['status' => 'success', 'message' => 'Codes QR récupérés', 'qr_codes' => $qr_codes], 200);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -84,9 +85,17 @@ class QrEtablissementController extends Controller
     }
 
     
-    public function destroy(QrEtablissement $qr_etablissement)
+    public function destroy($id)
     {
-        //
+        $createur_de_qr = Auth::user();
+        try {
+            $etablissement = Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
+            $etablissement->qr_etablissements()->where('id_qr_etablissement', $id)->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return response()->json(['status' => 'error', 'message' => 'Accès non autorisé'], 401);
+        }
     }
 }
 

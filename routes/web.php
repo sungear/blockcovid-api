@@ -31,6 +31,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('qr-code', ['middleware' => ['auth', 'uuid'], 'uses' => 'QrEtablissementController@store']); 
         $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'EtablissementController@store']);
         $router->get('qr-codes', ['middleware' => 'auth', 'uses' => 'QrEtablissementController@showAllAuth']);
+        $router->delete('qr-code/{id}', ['middleware' => 'auth', 'uses' => 'QrEtablissementController@destroy']);
     });
 
     $router->group(['prefix' => 'tests'], function () use ($router) {     
