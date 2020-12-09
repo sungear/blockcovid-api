@@ -125,6 +125,10 @@ Générer un QR code
 ```
 POST: etablissements/qr-code
 ```
+Obtenir la liste des QR codes générés par l'établissement
+```
+GET: etablissements/qr-codes
+```
 ### Test
 Renvoie tous les citoyens
 ```

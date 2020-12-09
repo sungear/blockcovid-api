@@ -24,12 +24,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['prefix' => 'medecins'], function () use ($router) {  
         $router->get('qr-code', ['middleware' => ['auth', 'uuid'], 'uses' => 'QrMedecinController@store']);     
-        $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'MedecinController@store']);  
+        $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'MedecinController@store']);
     });
 
     $router->group(['prefix' => 'etablissements'], function () use ($router) {    
         $router->post('qr-code', ['middleware' => ['auth', 'uuid'], 'uses' => 'QrEtablissementController@store']); 
-        $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'EtablissementController@store']); 
+        $router->post('inscription', ['middleware' => ['uuid', 'validator'], 'uses' => 'EtablissementController@store']);
+        $router->get('qr-codes', ['middleware' => 'auth', 'uses' => 'QrEtablissementController@showAllAuth']);
     });
 
     $router->group(['prefix' => 'tests'], function () use ($router) {     

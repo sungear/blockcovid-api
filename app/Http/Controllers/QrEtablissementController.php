@@ -35,7 +35,7 @@ class QrEtablissementController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            return response()->json(['status' => 'error', 'messages' => 'Accès non autorisé'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Accès non autorisé'], 401);
         }
     }
 
@@ -45,6 +45,20 @@ class QrEtablissementController extends Controller
         $qr_etablissement = response()->json($qr_etablissement[0]);
 
         return $qr_etablissement;
+    }
+
+    public function showAllAuth()
+    {
+        $createur_de_qr = Auth::user();
+        try {
+            $etablissement = \App\Models\Etablissement::FindOrFail($createur_de_qr->id_createur_de_qr);
+            $qr_codes = QrEtablissement::where('id_createur_de_qr', $etablissement->id_createur_de_qr)->get();
+            return response()->json(['status' => 'success', 'message' => 'Codes QR récupérés', 'qr_codes' => $qr_codes], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
+            return response()->json(['status' => 'error', 'message' => 'Accès non autorisé'], 401);
+        }
     }
 
     public function showAll()
