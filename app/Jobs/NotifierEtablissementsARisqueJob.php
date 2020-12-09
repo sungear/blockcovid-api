@@ -47,7 +47,7 @@ class NotifierEtablissementsARisqueJob extends Job
                 'nom' => $createur_de_qr->nom, 
                 'email' => $createur_de_qr->email
             ], function ($message) use ($createur_de_qr) {
-                $message->to('caien.red@gmail.com')->subject('Contact')->from('sky.tieren@gmail.com');
+                $message->to($createur_de_qr->email)->subject('Contact')->from('sky.tieren@gmail.com');
             });
         }
 
