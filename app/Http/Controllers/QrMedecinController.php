@@ -36,7 +36,7 @@ class QrMedecinController extends Controller
         } catch (\Illuminate\Database\QueryException $e){
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e){
-            return response()->json(['status' => 'error', 'messages' => 'Accès non autorisé'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Accès non autorisé'], 401);
         }
 
     }

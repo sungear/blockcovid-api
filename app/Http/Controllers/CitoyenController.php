@@ -64,7 +64,7 @@ class CitoyenController extends Controller
             'date_scan' => 'required|date'
         ], trans("validations"));
         if ($validator->fails()) {	
-            return response()->json(['status' => 'error', 'message' => $validator->messages()], 422);                
+            return response()->json(['status' => 'error', 'messages' => $validator->messages()], 422);                
         }            
         //Dispatch le travaille au QrMedecinController si medecin
         if ($request->input('type_createur') == "M") {
@@ -100,7 +100,7 @@ class CitoyenController extends Controller
         ], trans('validations'));
 
         if ($validator->fails()) {	
-            return response()->json(['status' => 'error', 'message' => $validator->messages()], 422);                
+            return response()->json(['status' => 'error', 'messages' => $validator->messages()], 422);                
         }
 
         $id_citoyen = $request->input('id_citoyen');

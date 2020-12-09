@@ -13,7 +13,7 @@ class CreateurDeQrController extends Controller
 {
     public function login(Request $request) {
         if ($request->errors) {
-            return response()->json(["errors" => $request->errors], 422);
+            return response()->json(['messages' => $request->errors], 422);
         }
 
         $credentials = [
@@ -22,7 +22,7 @@ class CreateurDeQrController extends Controller
         ];
 
         if(! $token = Auth::attempt($credentials)) {
-            return response()->json(['status'=> 'error', 'message' => 'Le mot de passe est incorrect.', 'errors' => [ 'mot_de_passe' => [ 'Le mot de passe est incorrect.' ]]], 422);
+            return response()->json(['status'=> 'error', 'messages' => [ 'mot_de_passe' => [ 'Le mot de passe est incorrect.' ]]], 422);
         }
 
         // L'utilisateur est authentifié, on peut aller chercher ses informations
