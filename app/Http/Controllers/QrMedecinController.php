@@ -77,7 +77,10 @@ class QrMedecinController extends Controller
             $qr_medecin->est_scan = true;
             $qr_medecin->save();
 
+
             $this->dispatch(new TrouverCitoyensARisqueJob($request->input('id_citoyen'), 
+                $request->input('date_scan')));
+            $this->dispatch(new \App\Jobs\NotifierEtablissementsARisqueJob($request->input('id_citoyen'), 
                 $request->input('date_scan')));
            
             return response()->json(['status' => 'success', 'message' => 'Scan validé', 
