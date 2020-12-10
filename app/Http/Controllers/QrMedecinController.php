@@ -6,6 +6,7 @@ use App\Models\QrMedecin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\TrouverCitoyensARisqueJob;
+use App\Jobs\TrouverEtablissementsEtCitoyensARisque;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class QrMedecinController extends Controller
@@ -76,10 +77,12 @@ class QrMedecinController extends Controller
             }
             $qr_medecin->est_scan = true;
             $qr_medecin->save();
+            
 
-
-            $this->dispatch(new TrouverCitoyensARisqueJob($request->input('id_citoyen'), 
-                $request->input('date_scan')));
+            // $this->dispatch(new TrouverEtablissementsEtCitoyensARisque($request->input('id_citoyen'), 
+            // $request->input('id_qr_code'), $request->input('date_scan')));
+            // $this->dispatch(new TrouverCitoyensARisqueJob($request->input('id_citoyen'), 
+            //     $request->input('date_scan')));
             $this->dispatch(new \App\Jobs\NotifierEtablissementsARisqueJob($request->input('id_citoyen'), 
                 $request->input('date_scan')));
            
