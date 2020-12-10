@@ -54,7 +54,7 @@ class TrouverCitoyensARisqueJob extends Job
                 ->toArray();
             $citoyens_risk = array_merge($citoyens_risk, $citoyens_risk_freq);
         }
-        var_dump($citoyens_risk[0]);
+        
         if(empty($citoyens_risk)) return;
 
         $citoyens_risk = array_unique($citoyens_risk);
