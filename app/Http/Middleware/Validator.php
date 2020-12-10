@@ -23,7 +23,7 @@ class Validator
         //Déplacer toute la logique de validation dans un Service ? 
         if ($request->has('type_createur')) {
             $validator = $this->validate_signup_createur_de_qr($request);            
-        } elseif ($request->has('mot_de_passe')) {
+        } else {
             $validator = $this->validate_signin_createur_de_qr($request);
         }
         if ($validator->fails()) {	
