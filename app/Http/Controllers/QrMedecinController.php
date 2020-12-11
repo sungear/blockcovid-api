@@ -6,10 +6,16 @@ use App\Models\QrMedecin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\TrouverCitoyensARisqueJob;
+use App\Jobs\TrouverEtablissementsEtCitoyensARisque;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class QrMedecinController extends Controller
-{
+{   
+    public function create()
+    {
+        
+    }
+
     public function store(Request $request)
     {        
         $createur_de_qr = Auth::user();
@@ -40,6 +46,7 @@ class QrMedecinController extends Controller
     {
         $qr_medecin = app('db')->select("SELECT * FROM pfe.qr_medecins WHERE id_qr_medecin = '$id'");
         $qr_medecin = response()->json($qr_medecin[0]);
+        //return QrMedecin::findOrFail($id);
 
         return $qr_medecin;
     }
@@ -56,6 +63,11 @@ class QrMedecinController extends Controller
         return $qr_medecin;
     }
     
+    public function edit(QrMedecin $qr_medecin)
+    {
+        //
+    }
+    
     public function update(Request $request)
     {
         try {
@@ -66,6 +78,9 @@ class QrMedecinController extends Controller
             $qr_medecin->est_scan = true;
             $qr_medecin->save();
             
+
+            // $this->dispatch(new TrouverEtablissementsEtCitoyensARisque($request->input('id_citoyen'), 
+            // $request->input('id_qr_code'), $request->input('date_scan')));
             $this->dispatch(new TrouverCitoyensARisqueJob($request->input('id_citoyen'), 
                 $request->input('date_scan')));
             $this->dispatch(new \App\Jobs\NotifierEtablissementsARisqueJob($request->input('id_citoyen'), 
@@ -78,6 +93,12 @@ class QrMedecinController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {            
             return response()->json(['status' => 'error', 'message' => $e->getMessage()], 500);
         }
+    }
+
+    
+    public function destroy(QrMedecin $qr_medecin)
+    {
+        //
     }
 }
 

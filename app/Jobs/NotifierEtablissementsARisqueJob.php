@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Citoyen;
 use App\Models\CreateurDeQr;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 

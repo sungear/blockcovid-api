@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EtablissementController extends Controller
-{
+{   
+    public function create(Request $request)
+    {
+        
+    }
+
     public function store(Request $request)
     {
         if ($request->errors) {
@@ -43,6 +48,7 @@ class EtablissementController extends Controller
     {
         $etablissement = app('db')->select("SELECT * FROM pfe.etablissements WHERE id_createur_de_qr = '$id'");
         $etablissement = response()->json($etablissement[0]);
+        //$etablissement = Etablissement::findOrFail($id);
 
         return $etablissement;
     }
@@ -53,6 +59,22 @@ class EtablissementController extends Controller
         ->join('pfe.createurs_de_qr', 'pfe.createurs_de_qr.id_createur_de_qr', 
         '=', 'pfe.etablissements.id_createur_de_qr')->get();
         return $createur_de_qr;
+    }
+    
+    public function edit(Etablissement $etablissement)
+    {
+        //
+    }
+    
+    public function update(Request $request, Etablissement $etablissement)
+    {
+        //
+    }
+
+    
+    public function destroy(Etablissement $etablissement)
+    {
+        //
     }
 }
 

@@ -29,6 +29,10 @@ class TrouverCitoyensARisqueJob extends Job
      */
     public function handle()
     {   
+        // Permet de récupérer les établissement à risque avec le frequentation liées (pour les dates)
+        // $etablissements = $citoyen->frequentations()->whereBetween('date_frequentation', 
+        // [$date_risk_from, $date_risk_to])->get();
+        
         $date_scan = new Carbon($this->date_scan);
         $date_risk_to = $date_scan->toDateTimeString();
         $date_risk_from = $date_scan->subdays(10)->toDateTimeString();

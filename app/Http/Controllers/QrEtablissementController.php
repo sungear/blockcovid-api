@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class QrEtablissementController extends Controller
 {   
+    public function create(Request $request)
+    {
+        
+    }
+
     public function store(Request $request)
     {      
         $createur_de_qr = Auth::user();
@@ -68,6 +73,17 @@ class QrEtablissementController extends Controller
         $qr_etablissement = app('db')->select("SELECT * FROM pfe.qr_etablissements WHERE id_etablissement = '$id'");
         return $qr_etablissement;
     }
+    
+    public function edit(QrEtablissement $qr_etablissement)
+    {
+        //
+    }
+    
+    public function update(Request $request, QrEtablissement $qr_etablissement)
+    {
+        //
+    }
+
     
     public function destroy($id)
     {
