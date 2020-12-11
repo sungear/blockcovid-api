@@ -3,11 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
 use App\Models\CreateurDeQr;
 use App\Models\Medecin;
 use App\Models\Etablissement;
-use App\Models\Citoyen;
 
 class Validator
 {
@@ -20,7 +18,6 @@ class Validator
      */
     public function handle($request, Closure $next)
     {   
-        //Déplacer toute la logique de validation dans un Service ? 
         if ($request->has('type_createur')) {
             $validator = $this->validate_signup_createur_de_qr($request);            
         } else {

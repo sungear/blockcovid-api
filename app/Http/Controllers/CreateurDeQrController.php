@@ -56,11 +56,6 @@ class CreateurDeQrController extends Controller
         ], 200);
     }
 
-    public function create(Request $request)
-    {
-        
-    } 
-
     public function store(Request $request)
     {
         return CreateurDeQr::create([
@@ -70,22 +65,6 @@ class CreateurDeQrController extends Controller
             'mot_de_passe' => Hash::make($request->input('mot_de_passe')),
             'type_createur' => $request->input('type_createur')
         ]);
-    }
-    
-    public function edit(CreateurDeQr $createur_de_qr)
-    {
-        //
-    }
-    
-    public function update(Request $request, CreateurDeQr $createur_de_qr)
-    {
-        //
-    }
-
-    
-    public function destroy(CreateurDeQr $createur_de_qr)
-    {
-        //
     }
 }
 

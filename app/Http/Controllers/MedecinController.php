@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Medecin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class MedecinController extends Controller
 {   
-    public function create(Request $request)
-    {
-        
-    }
-
     public function store(Request $request)
     {
         
@@ -50,8 +44,6 @@ class MedecinController extends Controller
     {
         $medecin = app('db')->select("SELECT * FROM pfe.medecins WHERE id_createur_de_qr = '$id'");
         $medecin = response()->json($medecin[0]);
-        // $medecin = Medecin::findOrFail($id);
-
         return $medecin;
     }
     
@@ -61,22 +53,6 @@ class MedecinController extends Controller
         ->join('pfe.createurs_de_qr', 'pfe.createurs_de_qr.id_createur_de_qr', 
         '=', 'pfe.medecins.id_createur_de_qr')->get();
         return $createur_de_qr;
-    }
-    
-    public function edit(Medecin $medecin)
-    {
-        //
-    }
-    
-    public function update(Request $request, Medecin $medecin)
-    {
-        //
-    }
-
-    
-    public function destroy(Medecin $medecin)
-    {
-        //
     }
 }
 
