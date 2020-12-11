@@ -21,7 +21,7 @@ class FrequentationController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Erreur interne serveur'], 500);
         } 
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {  
-            return response()->json(['status' => 'error', 'message' => 'Qr Code incorrect'], 440);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 440);
         }
     }
 }
