@@ -7,12 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\NotificationService;
 
 class CitoyenController extends Controller
-{   
-    public function create()
-    {
-        
-    }
-
+{
     public function notify(Request $request)
     {
         $tokens = $request->input('tokens');
@@ -56,7 +51,6 @@ class CitoyenController extends Controller
 
     public function storeQrCode(Request $request)
     {   
-        //Deplacer toute la logique de validation dans un Service !
         $validator = app('validator')->make($request->input(), [
             'id_citoyen' => 'required|exists:pgsql.pfe.citoyens',
             'type_createur' => ['required', 'max:1', 'regex:/^M|E$/u'],
@@ -66,7 +60,7 @@ class CitoyenController extends Controller
         if ($validator->fails()) {	
             return response()->json(['status' => 'error', 'messages' => $validator->messages()], 422);                
         }            
-        //Dispatch le travaille au QrMedecinController si medecin
+        //Dispatch le travail au QrMedecinController si medecin
         if ($request->input('type_createur') == "M") {
             return app()->call('App\Http\Controllers\QrMedecinController@update');
         }       
@@ -83,17 +77,12 @@ class CitoyenController extends Controller
     
     public function showAll()
     {
-        //Avec un query builder
         $citoyens = app('db')->table('pfe.citoyens')->get();
-        //Avec du sql basic
-        // $citoyens = app('db')->select("SELECT * FROM pfe.citoyens");
-        // $citoyens = response()->json($citoyens);
         return $citoyens;
     }
     
     public function edit(Request $request)
     {
-        //Deplacer toute la logique de validation dans un Service !
         $validator = app('validator')->make($request->input(), [
             'id_citoyen' => 'required|exists:pgsql.pfe.citoyens',
             'token_fcm' => 'required'
@@ -108,17 +97,6 @@ class CitoyenController extends Controller
         Citoyen::whereKey($id_citoyen)->update(['token_fcm' => $token_fcm]);
 
         return response()->json(['status' => 'success', 'message' => 'Token mise à jour'], 200);
-    }
-    
-    public function update(Request $request, Citoyen $citoyen)
-    {
-        //
-    }
-
-    
-    public function destroy(Citoyen $citoyen)
-    {
-        //
     }
 }
 

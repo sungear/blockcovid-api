@@ -49,20 +49,4 @@ class CitoyenTest extends TestCase
         $this->seeInDatabase('pfe.citoyens', ['token_fcm' => $citoyen_array['token_fcm'], 
         'id_citoyen' => $citoyen_array['id_citoyen']]);
     }  
-    
-    // public function test_citoyen_scan_qr_code_medecin()
-    // {
-        
-    // } 
-    
-    // public function test_citoyen_scan_qr_code_etablssement()
-    // {
-        
-    // }  
-    
-    // public function test_citoyen_id_lost()
-    // {
-        
-    // } 
-   
 }
