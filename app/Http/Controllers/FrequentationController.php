@@ -11,6 +11,7 @@ class FrequentationController extends Controller
     {           
         try { 
             //Validation des champs. Renvoie d'erreurs si champs vide ou si non existant dans la DB
+            dd($request->input('id_qr_code'));
             $qr_etablissement = QrEtablissement::FindOrFail($request->input('id_qr_code'));
             dd($qr_etablissement);
             $qr_etablissement->frequentations()->attach($request->input('id_citoyen'),
